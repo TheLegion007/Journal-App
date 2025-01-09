@@ -42,11 +42,14 @@ public class JournalEntryService {
         return journalEntryRepository.findById(myId);
     }
 
-    public void deleteById(ObjectId myId) {
+    public void deleteById(ObjectId myId, String userName) {
+        User user = userService.findByUserName(userName);   // checked if user journal list has one id equal to deleteID //
+        user.getJournalEntries().removeIf(x->x.getId().equals(myId));  // remove it from list //
+        userService.saveEntry(user);
         journalEntryRepository.deleteById(myId);
     }
 
-    public void updateById(JournalEntry journalEntry, ObjectId myId) {
+    public void updateById(JournalEntry journalEntry, ObjectId myId , String userName) {
         journalEntryRepository.save(journalEntry);
     }
 }
