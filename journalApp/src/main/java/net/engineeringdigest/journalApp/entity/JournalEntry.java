@@ -1,6 +1,7 @@
 package net.engineeringdigest.journalApp.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import org.bson.types.ObjectId;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Document(collection = "journal_entries")   // collection is equal to table in mongoDB //
 @Getter
 @Setter    //or @Data
+@NoArgsConstructor
 public class JournalEntry {
     @Id
     private ObjectId id;
