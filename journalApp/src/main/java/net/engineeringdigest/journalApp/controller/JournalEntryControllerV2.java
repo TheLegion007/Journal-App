@@ -1,9 +1,7 @@
 package net.engineeringdigest.journalApp.controller;
 
 import net.engineeringdigest.journalApp.entity.JournalEntry;
-import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.service.JournalEntryService;
-import net.engineeringdigest.journalApp.service.UserService;
 import org.apache.tomcat.util.http.parser.HttpParser;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,26 +17,22 @@ import java.util.Optional;
 @RequestMapping("/journal")
 class JournalEntryControllerV2 {
 
-    @Autowired  // inject instance of entryService in controller class //
-    private JournalEntryService journalEntryService;
-
     @Autowired
-    private UserService userService;
+    private JournalEntryService journalEntryService;   // inject instance of entryService in controller class //
 
-    @GetMapping("{userName}")
-    public ResponseEntity<?> getAllJournalEntriesOfUser(@PathVariable String userName) {
-        User user =  userService.findByUserName(userName);
-        List<JournalEntry> all_List =  user.getJournalEntries();
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        List<JournalEntry> all_List =  journalEntryService.getAll();
         if(!all_List.isEmpty()) {
             return new ResponseEntity<>(all_List, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("{userName}")
-    public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry myEntry, @PathVariable String userName) {
+    @PostMapping
+    public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry myEntry) {
         try {
-            journalEntryService.saveEntry(myEntry, userName);
+            journalEntryService.saveEntry(myEntry);
             return new ResponseEntity<>(myEntry, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
