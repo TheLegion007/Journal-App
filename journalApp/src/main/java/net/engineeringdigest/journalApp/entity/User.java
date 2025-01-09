@@ -1,6 +1,7 @@
 package net.engineeringdigest.journalApp.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import org.bson.types.ObjectId;
@@ -16,6 +17,7 @@ import java.util.List;
 @Document(collection = "users")   // collection is equal to table in mongoDB //
 @Getter
 @Setter    //or @Data
+@NoArgsConstructor
 public class User {
     @Id
     private ObjectId id;
