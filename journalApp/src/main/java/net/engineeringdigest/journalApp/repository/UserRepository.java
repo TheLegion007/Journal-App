@@ -1,6 +1,6 @@
 package net.engineeringdigest.journalApp.repository;
 
-//  controller -> service -> repository //
+//  controller -> service -> repository -> MongoRepository//
 
 import net.engineeringdigest.journalApp.entity.JournalEntry;
 import net.engineeringdigest.journalApp.entity.User;
